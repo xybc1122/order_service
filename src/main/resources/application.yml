@@ -1,0 +1,11 @@
+server:
+  port: 8092
+#注册中心
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8088/eureka/
+#服务的名称
+spring:
+  application:
+    name: order-service
