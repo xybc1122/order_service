@@ -1,11 +1,12 @@
 server:
-  port: 8092
-#注册中心
-eureka:
+  port: 8770
+eureka:  #娉ㄥ唽涓績
   client:
     serviceUrl:
-      defaultZone: http://127.0.0.1:8088/eureka/
-#服务的名称
+      defaultZone: http://127.0.0.1:8660/eureka/
 spring:
   application:
     name: order-service
+#PRODUCT-SERVICE:
+  #ribbon:
+    #NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
