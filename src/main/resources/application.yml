@@ -1,12 +1,21 @@
+  #注册中心
 server:
-  port: 8770
-eureka:  #注册中心
+  port: 8880
+eureka:
   client:
     serviceUrl:
       defaultZone: http://127.0.0.1:8660/eureka/
+  #给服务取个名称
 spring:
   application:
     name: order-service
 #PRODUCT-SERVICE:
   #ribbon:
     #NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+  #feign设置调用超时时间
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 2000
+        readTimeout: 2000  #超时时间
