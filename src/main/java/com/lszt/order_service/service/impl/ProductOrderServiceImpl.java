@@ -8,6 +8,7 @@ import com.lszt.order_service.service.ProductOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
 import java.util.Date;
 import java.util.UUID;
 
@@ -40,7 +41,6 @@ public class ProductOrderServiceImpl implements ProductOrderService {
         String response = productClient.findById(productId);
         //调用用户服务，主要是获取用户名称，用户的级别或者积分信息
         //TODO
-
 
 
         JsonNode jsonNode = JsonUtils.str2JsonNode(response);

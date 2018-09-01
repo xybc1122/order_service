@@ -9,13 +9,30 @@ eureka:
 spring:
   application:
     name: order-service
+  redis:
+    database: 0
+    host: 192.168.3.222
+    timeout: 2000
+    port: 6380
 #PRODUCT-SERVICE:
   #ribbon:
     #NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
   #feign设置调用超时时间
 feign:
+  hystrix:
+   #开启hystrix
+    enabled: true
   client:
     config:
       default:
-        connectTimeout: 2000
-        readTimeout: 2000  #超时时间
+        connectTimeout: 4000
+        #超时时间
+        readTimeout: 4000
+#把hystrix超时时间4秒
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 4000
