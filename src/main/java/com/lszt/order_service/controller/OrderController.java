@@ -6,6 +6,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,9 +33,13 @@ public class OrderController {
      * @param productId 订单id
      * @return
      */
-    @RequestMapping("save")
+    @PostMapping("save")
     @HystrixCommand(fallbackMethod = "savePrderFail")
-    public Object save(@RequestParam("userId") int userId, @RequestParam("productId") int productId,HttpServletRequest request) {
+    public Object save(@RequestParam("userId") int userId, @RequestParam("productId") int productId, HttpServletRequest request) {
+        String token = request.getHeader("token");
+        String cookie = request.getHeader("cookie");
+        System.out.println("token=" + token);
+        System.out.println("cookie=" + cookie);
         Map<String, Object> data = new HashMap<>();
         data.put("code", 0);
         data.put("data", productOrderService.save(userId, productId));
@@ -45,7 +50,7 @@ public class OrderController {
     private Object savePrderFail(int userId, int productId, HttpServletRequest request) {
         //监控报警
         String savOrderKye = "save-order";
-        final  String ip = request.getRemoteAddr();
+        final String ip = request.getRemoteAddr();
         String sendValue = redisTemplate.opsForValue().get(savOrderKye);
         //开启一个线程  Lambda表达式
         new Thread(() -> {
@@ -57,7 +62,6 @@ public class OrderController {
                 System.out.println("已经发送过短信,20秒不重复发送");
             }
         }).start();
-
         Map<String, Object> msg = new HashMap<>();
         msg.put("code", -1);
         msg.put("msg", "抢购太多，稍后重试!");
