@@ -3,13 +3,12 @@ package com.lszt.order_service.controller;
 import com.lszt.order_service.service.ProductOrderService;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -33,13 +32,13 @@ public class OrderController {
      * @param productId 订单id
      * @return
      */
-    @PostMapping("save")
+    @GetMapping("save")
     @HystrixCommand(fallbackMethod = "savePrderFail")
     public Object save(@RequestParam("userId") int userId, @RequestParam("productId") int productId, HttpServletRequest request) {
         String token = request.getHeader("token");
         String cookie = request.getHeader("cookie");
-        System.out.println("token=" + token);
-        System.out.println("cookie=" + cookie);
+        //System.out.println("token=" + token);
+        //System.out.println("cookie=" + cookie);
         Map<String, Object> data = new HashMap<>();
         data.put("code", 0);
         data.put("data", productOrderService.save(userId, productId));

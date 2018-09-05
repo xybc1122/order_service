@@ -5,6 +5,8 @@ import com.lszt.order_service.Utils.JsonUtils;
 import com.lszt.order_service.domain.ProductOrder;
 import com.lszt.order_service.service.ProductClient;
 import com.lszt.order_service.service.ProductOrderService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -17,6 +19,10 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     //ribbon方式调用
     @Autowired
     private RestTemplate restTemplate;
+
+
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+
 
     //feign方式调用
     @Autowired
@@ -41,8 +47,7 @@ public class ProductOrderServiceImpl implements ProductOrderService {
         String response = productClient.findById(productId);
         //调用用户服务，主要是获取用户名称，用户的级别或者积分信息
         //TODO
-
-
+        logger.info("service save order");
         JsonNode jsonNode = JsonUtils.str2JsonNode(response);
         ProductOrder productOrder = new ProductOrder();
         productOrder.setCreateTime(new Date());
