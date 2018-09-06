@@ -1,0 +1,23 @@
+  #注册中心
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8660/eureka/
+  #给服务取个名称
+spring:
+  application:
+    name: order-service
+  redis:
+    database: 0
+    host: 192.168.3.222
+    timeout: 2000
+    port: 6380
+  cloud:
+    config:
+      discovery:
+        service-id: CONFIG-SERVER
+        enabled: true
+      #配置文件后缀名称
+      profile: dev
+      #读取哪个分支
+      #label: master
