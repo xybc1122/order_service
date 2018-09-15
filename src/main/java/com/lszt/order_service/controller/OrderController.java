@@ -63,7 +63,7 @@ public class OrderController {
         }).start();
         Map<String, Object> msg = new HashMap<>();
         msg.put("code", -1);
-        msg.put("msg", "抢购太多，稍后重试!");
+        msg.put("msg", "走了savePrderFail方法 !");
         return msg;
     }
 
